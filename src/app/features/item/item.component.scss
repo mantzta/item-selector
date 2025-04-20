@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    cursor: pointer;
+}
+
+.row:hover {
+    background-color: var(--hover-color);
+}
+
+label {
+    cursor: pointer;
+}

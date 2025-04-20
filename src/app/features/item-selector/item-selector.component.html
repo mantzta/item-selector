@@ -1,0 +1,10 @@
+@if (!loadingTree) {
+    @for (folder of rootFolders; track folder.id) {
+        <app-folder 
+            class="folder" 
+            [folder]="folder"
+            [clearFlag]="clearFlag"
+            [level]="1"
+        ></app-folder>
+    }
+}

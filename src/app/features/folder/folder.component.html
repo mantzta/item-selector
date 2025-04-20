@@ -1,0 +1,50 @@
+<div [class.collapsed]="collapsed">
+    <div class="row" (click)="toggleFolderCheckbox()">
+        <div class="checkbox" [ngStyle]="{ 'margin-left': level * 16 + 'px' }">
+            <input 
+                type="checkbox" 
+                [checked]="folder.state === 'selected'"
+                [indeterminate]="folder.state === 'indeterminate'"
+            />
+            <label class="checkbox-label ml-small">{{ folder.title }}</label>
+        </div>
+    
+        <div class="arrow-btn" (click)="toggleFolder(); $event.stopPropagation();">
+            @if (collapsed) {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M18 9l-6 6-6-6" stroke="currentColor" stroke-width="2"
+                        fill="none" />
+                </svg>
+            } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2"
+                        fill="none" />
+                </svg>
+            }
+        </div>
+    </div>
+    
+    <div class="second-level">
+        @for (folderChild of folder.folderChildren; track folderChild.id) {
+            <app-folder 
+                [folder]="folderChild" 
+                [parentState]="state" 
+                [clearFlag]="clearFlag"
+                [level]="level + 1"
+                (stateChanged)="onChildFolderStateChange()"
+            ></app-folder>
+        }
+    
+        @for (itemChild of folder.itemChildren; track itemChild.id) {
+            <app-item 
+                [item]="itemChild"
+                [parentState]="state"
+                [clearFlag]="clearFlag"
+                [level]="level + 1"
+                (stateChange)="onChildItemStateChange($event, itemChild.id)"
+            ></app-item>
+        }
+    </div>
+</div>
+
+

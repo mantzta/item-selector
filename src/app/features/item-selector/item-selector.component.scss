@@ -1,0 +1,14 @@
+:host {
+    width: 275px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.folder {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+}

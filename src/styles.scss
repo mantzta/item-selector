@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+:root {
+    --surface-color: hsl(0, 0%, 100%);
+    --hover-color: hsl(0, 0%, 96%);
+    --text-color: hsl(195, 3%, 24%);
+    --border-color: hsl(210, 0%, 89%);
+    --primary-color: hsl(213, 97%, 53%);
+
+    --spacing-unit: 16px;
+    --font-size: 14px;
+    --border-radius: 3px;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: var(--font-size);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--surface-color);
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--surface-color);
+}
+
+.mt {
+    margin-top: var(--spacing-unit);
+}
+
+.mb {
+    margin-bottom: var(--spacing-unit);
+}
+
+.ml {
+    margin-left: var(--spacing-unit);
+}
+
+.ml-small {
+    margin-left: calc(var(--spacing-unit) / 2);
+}
+
+.mr {
+    margin-right: var(--spacing-unit);
+}

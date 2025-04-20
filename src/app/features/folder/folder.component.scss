@@ -1,0 +1,37 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 34px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--hover-color);
+    }
+
+    .checkbox,
+    .arrow-btn {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+}
+
+.second-level {
+    height: 100%;
+    opacity: 1;
+}
+
+.collapsed .second-level {
+    height: 0;
+    opacity: 0;
+}
+
+.checkbox-label {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.arrow-btn {
+    padding-right: calc(var(--spacing-unit) / 1.5);
+}

@@ -1,0 +1,17 @@
+:host {
+    width: 275px;
+    display: flex;
+    flex-direction: column;
+}
+
+.clear-btn {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 10px 20px;
+    border: none;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
