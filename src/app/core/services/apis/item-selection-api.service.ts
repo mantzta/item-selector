@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { FoldersItemsResponse } from '../models/folders-items-response';
-import { Item } from '../models/item';
-import { Folder, FolderStateEnum } from '../models/folder';
-import { SelectionTree } from '../models/selection-tree';
+import { FoldersItemsResponse } from '../../models/folders-items-response';
+import { Item } from '../../models/item';
+import { Folder, FolderStateEnum } from '../../models/folder';
+import { SelectionMap } from '../../models/selection-map';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ItemService {
+export class ItemSelectionApiService {
     private apiUrl = 'assets/response.json';
 
     constructor(private http: HttpClient) {}
 
-    getFoldersWithItems(): Observable<SelectionTree> {
+    getFoldersWithItems(): Observable<SelectionMap> {
         return this.http.get<FoldersItemsResponse>(this.apiUrl).pipe(
             map(response => {
 
@@ -23,22 +23,7 @@ export class ItemService {
         );
     }
 
-    sortByTitle(elements: (Folder | Item)[]): void {
-        elements.sort((a, b) => {
-            const titleA = a.title.toLowerCase();
-            const titleB = b.title.toLowerCase();
-
-            if (titleA < titleB) {
-                return -1;
-            }
-            if (titleA > titleB) {
-                return 1;
-            }
-            return 0;
-        });
-    }
-
-    private createSelectionTree(foldersData: FoldersItemsResponse): SelectionTree {
+    private createSelectionTree(foldersData: FoldersItemsResponse): SelectionMap {
         const tree = this.addFoldersToMap(foldersData.folders);
         this.addFolderToParent(tree.map);
         this.addItemToParent(tree.map, foldersData.items);
@@ -46,7 +31,7 @@ export class ItemService {
         return tree;
     }
 
-    private addFoldersToMap(folders: { columns: string[], data: [number, string, number][] }): SelectionTree {
+    private addFoldersToMap(folders: { columns: string[], data: [number, string, number][] }): SelectionMap {
         const map = new Map<number, Folder>();
         const rootFolders: Folder[] = [];
 
@@ -100,8 +85,7 @@ export class ItemService {
             parentId: folder[parentIdIndex] as number,
             folderChildren: [],
             itemChildren: [],
-            state: FolderStateEnum.Unselected,
-            selectedItems: new Set<number>()
+            state: FolderStateEnum.Unselected
         };
     }
 
@@ -115,6 +99,7 @@ export class ItemService {
             id: item[idIndex] as number,
             title: item[titleIndex] as string,
             folderId: item[folderIdIndex] as number,
+            isSelected: false
         };
     }
 }

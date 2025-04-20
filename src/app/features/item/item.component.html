@@ -1,6 +1,6 @@
-<div class="row" (click)="toggleRowCheckbox()">
+<div class="row" (click)="toggleCheckbox()">
     <div [ngStyle]="{ 'margin-left': level * 16 + 'px' }">
-        <input type="checkbox" [checked]="isSelected" />
+        <input type="checkbox" [checked]="item.isSelected" />
         <label class="ml-small">{{ item.title }}</label>
     </div>
 </div>

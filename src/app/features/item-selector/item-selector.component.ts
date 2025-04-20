@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ItemService } from '../../core/services/item.service';
-import { SelectionTree } from '../../core/models/selection-tree';
+import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
 import { Folder } from '../../core/models/folder';
 import { FolderComponent } from '../folder/folder.component';
+import { SortService } from '../../core/services/utilities/sort.service';
+import { ItemSelectionApiService } from '../../core/services/apis/item-selection-api.service';
+import { SelectionMap } from '../../core/models/selection-map';
 
 @Component({
   selector: 'app-item-selector',
@@ -13,19 +14,18 @@ import { FolderComponent } from '../folder/folder.component';
   styleUrl: './item-selector.component.scss'
 })
 export class ItemSelectorComponent implements OnInit {
-  @Output() updatedSelection = new EventEmitter<number[]>();
   rootFolders!: Folder[];
   loadingTree = true;
   clearFlag = false;
 
-  constructor(private itemService: ItemService) {}
+  constructor(private itemSelectionApiService: ItemSelectionApiService, private sortService: SortService) { }
 
   ngOnInit(): void {
-    this.itemService.getFoldersWithItems().pipe(
+    this.itemSelectionApiService.getFoldersWithItems().pipe(
       finalize(() => this.loadingTree = false)
-    ).subscribe((response: SelectionTree) => {
+    ).subscribe((response: SelectionMap) => {
       this.rootFolders = response.rootFolders;
-      this.itemService.sortByTitle(this.rootFolders);
+      this.sortService.sortByTitle(this.rootFolders);
     });
   }
 

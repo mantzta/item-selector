@@ -1,5 +1,5 @@
 <div [class.collapsed]="collapsed">
-    <div class="row" (click)="toggleFolderCheckbox()">
+    <div class="row" (click)="toggleCheckbox()">
         <div class="checkbox" [ngStyle]="{ 'margin-left': level * 16 + 'px' }">
             <input 
                 type="checkbox" 
@@ -28,20 +28,20 @@
         @for (folderChild of folder.folderChildren; track folderChild.id) {
             <app-folder 
                 [folder]="folderChild" 
-                [parentState]="state" 
+                [parentState]="stateToPassDown" 
                 [clearFlag]="clearFlag"
                 [level]="level + 1"
-                (stateChanged)="onChildFolderStateChange()"
+                (stateChanged)="onChildChangeUpdateState()"
             ></app-folder>
         }
     
         @for (itemChild of folder.itemChildren; track itemChild.id) {
             <app-item 
                 [item]="itemChild"
-                [parentState]="state"
+                [parentState]="stateToPassDown"
                 [clearFlag]="clearFlag"
                 [level]="level + 1"
-                (stateChange)="onChildItemStateChange($event, itemChild.id)"
+                (stateChange)="onChildChangeUpdateState()"
             ></app-item>
         }
     </div>

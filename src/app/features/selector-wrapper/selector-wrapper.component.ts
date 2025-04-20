@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ItemSelectorComponent } from "../item-selector/item-selector.component";
-import { SelectionService } from '../../core/services/selection.service';
+import { SelectionService } from '../../core/services/utilities/selection.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
 export class SelectorWrapperComponent implements OnInit, OnDestroy {
   @ViewChild(ItemSelectorComponent) itemSelector!: ItemSelectorComponent;
   selectedItemsIds: number[] = [];
-  clearSelection?: boolean;
   selectedSubscription!: Subscription;
 
   constructor(private selectionService: SelectionService, private cdr: ChangeDetectorRef) {}
@@ -31,6 +30,7 @@ export class SelectorWrapperComponent implements OnInit, OnDestroy {
 
   triggerClear(): void {
     this.itemSelector.clearSelection();
+    this.cdr.detectChanges();
   }
 }
 

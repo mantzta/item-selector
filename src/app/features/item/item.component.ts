@@ -3,6 +3,7 @@ import { Item } from '../../core/models/item';
 import { FormsModule } from '@angular/forms';
 import { FolderState, FolderStateEnum } from '../../core/models/folder';
 import { CommonModule } from '@angular/common';
+import { SelectionService } from '../../core/services/utilities/selection.service';
 
 @Component({
   selector: 'app-item',
@@ -17,21 +18,32 @@ export class ItemComponent {
   @Input() level!: number;
   @Input() clearFlag?: boolean;
   @Output() stateChange = new EventEmitter<boolean>();
-  isSelected = false;
+
+  constructor(private selectionService: SelectionService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["parentState"] && changes["parentState"].currentValue != null) {
-      this.isSelected = changes["parentState"].currentValue === FolderStateEnum.Selected
-        || changes["parentState"].currentValue === FolderStateEnum.Indeterminate ? true : false;
+      this.item.isSelected = changes["parentState"].currentValue === FolderStateEnum.Selected ? true : false;
+      this.setSelectionInTotal();
     }
 
     if (changes['clearFlag']) {
-      this.isSelected = false;
+      this.item.isSelected = false;
+      this.setSelectionInTotal();
     }
   }
 
-  toggleRowCheckbox(): void {
-    this.isSelected = !this.isSelected;
-    this.stateChange.emit(this.isSelected);
+  toggleCheckbox(): void {
+    this.item.isSelected = !this.item.isSelected;
+    this.setSelectionInTotal();
+    this.stateChange.emit(this.item.isSelected);
+  }
+
+  setSelectionInTotal() {
+    if (this.item.isSelected) {
+      this.selectionService.addItem(this.item.id);
+    } else {
+      this.selectionService.removeItem(this.item.id);
+    }
   }
 }

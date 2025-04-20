@@ -7,7 +7,6 @@ export interface Folder {
     folderChildren: Folder[];
     itemChildren: Item[];
     state: FolderState;
-    selectedItems: Set<number>;
 }
 
 export enum FolderStateEnum {

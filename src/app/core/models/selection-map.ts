@@ -1,6 +1,6 @@
 import { Folder } from "./folder";
 
-export interface SelectionTree {
+export interface SelectionMap {
     rootFolders: Folder[],
     map: Map<number, Folder>
 }
