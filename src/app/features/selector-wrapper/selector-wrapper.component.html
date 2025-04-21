@@ -1,13 +1,13 @@
 <app-item-selector></app-item-selector>
 
-@if (selectedItemsIds.length > 0) {
-    <div class="mt">
-        Selected item ID's:
+<div class="selected-items mt">
+    @if (selectedItemsIds.length) {
+    Selected item ID's:
         @for (id of selectedItemsIds; track id) {
-        {{ id }}
+            {{ id }}
         }
-    </div>
-}
+    }
+</div>
 
 <div class="btn-wrapper">
     <button class="clear-btn mt" (click)="triggerClear()">Clear selection</button>
